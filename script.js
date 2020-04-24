@@ -1,16 +1,12 @@
 
 import KEY from './src/data.js';
 
-// import arrays! //
-
-const { key_Code: keyCodeWhich } = KEY;
-const { key_En: englishLanguage } = KEY;
-const { key_En_Capslock: englishLanguageCapslock } = KEY;
-const { key_Ru: russianLanguage } = KEY;
-const { key_Ru_Capslock: russianLanguageCapslock } = KEY;
-const { special_Key: specialKeyTranscription } = KEY;
-
-// ADD DOM COLLECTION---------------------------------------------------
+const { keyCode: keyCodeWhich } = KEY;
+const { keyEn: englishLanguage } = KEY;
+const { keyEnCapslock: englishLanguageCapslock } = KEY;
+const { keyRu: russianLanguage } = KEY;
+const { keyRuCapslock: russianLanguageCapslock } = KEY;
+const { specialKey: specialKeyTranscription } = KEY;
 
 const keyboard = document.createElement('div');
 const body = document.querySelector('body');
@@ -19,10 +15,9 @@ const wrapper = document.createElement('div');
 const HELPER = document.createElement('p');
 wrapper.appendChild(HELPER);
 HELPER.textContent = '(ENG-RU)  CTRL + ALT or $ + ☭  WINDOWS 10';
-let englishLanguge = 'en';
+let switcherLanguage = 'en';
 let CapsLock = false;
 keyboard.className = 'keyboard';
-keyboard.id = 'keyboard';
 wrapper.className = 'wrapper';
 textArea.className = 'text-area';
 body.append(wrapper);
@@ -32,7 +27,6 @@ const img = document.createElement('IMG');
 wrapper.append(img);
 img.src = 'picture/mouse.png';
 
-// keys_______________--
 const activeButton = (targetId) => {
   if (document.getElementById(targetId).classList.contains('key')) {
     document.getElementById(targetId).classList.add('active');
@@ -43,36 +37,32 @@ const activeNot = (targetId) => {
   if (document.getElementById(targetId).classList.contains('key')) {
     document.getElementById(targetId).classList.remove('active');
   }
-  return targetId;
 };
 
-
-const mouseClickUp = (event) => {
-  if (event.fromElement && event.toElement && event.fromElement.id && event.toElement.id) {
-    if (!(event.target.id === 'CapsLock') && !(event.target.id === 'ShiftLeft') && !(event.target.id === 'ShiftRight')) {
+const onMouseClickUp = (event) => {
+  if (event.fromElement  && event.fromElement.id && event.toElement && event.toElement.id) {
+    if (event.target.id !== 'CapsLock' && event.target.id !== 'ShiftLeft' && event.target.id !== 'ShiftRight') {
       activeNot(event.target.id);
     }
   }
 };
 
-
-function activeButtonContain(str) {
+function isActiveButtonContain(str) {
   if (document.getElementById(str).classList.contains('active')) {
     return true;
   }
   return false;
 }
-function KeyboardFixBug() {
+function fixKeyboardBug() {
   while (keyboard.hasChildNodes()) {
     keyboard.removeChild(keyboard.firstChild);
   }
 }
-// create key_BOARD AND KEYS
-const keys = (el) => {
+
+const getSpecialKeys = (el) => {
   const key = document.createElement('div');
   key.className = 'key';
   key.textContent = `${el}`;
-
   switch (el) {
     case ' ':
       key.classList.add('spaceBar');
@@ -82,14 +72,14 @@ const keys = (el) => {
     case 'Enter':
     case 'Backspace':
     case 'Tab':
-      key.classList.add('width_keys');
+      key.classList.add('width-keys');
       break;
     default:
       key.classList.add('p');
       break;
   }
   keyboard.append(key);
-  keyboard.addEventListener('mouseout', mouseClickUp);
+  keyboard.addEventListener('mouseout', onMouseClickUp);
 };
 
 let firstChild;
@@ -102,15 +92,14 @@ function searchElement(i, elem) {
   return buz;
 }
 
-
 const keyboardWrapper = (array) => {
   if (wrapper.querySelector('.keyboard')) {
-    KeyboardFixBug();
+    fixKeyboardBug();
   }
   wrapper.append(keyboard);
   for (let i = 0; i < array.length; i += 1) {
     array[i].forEach((element) => {
-      keys(element);
+      getSpecialKeys(element);
     });
   }
   firstChild = keyboard.childNodes;
@@ -120,56 +109,52 @@ const keyboardWrapper = (array) => {
   }
 };
 
-
 const capsLockSearch = () => {
   if (CapsLock) {
-    if (englishLanguge === 'ru') {
+    if (switcherLanguage === 'ru') {
       keyboardWrapper(russianLanguageCapslock);
     }
-    if (englishLanguge === 'en') {
+    if (switcherLanguage === 'en') {
       keyboardWrapper(englishLanguageCapslock);
     }
   }
   if (!CapsLock) {
-    if (englishLanguge === 'ru') {
+    if (switcherLanguage === 'ru') {
       keyboardWrapper(russianLanguage);
     }
-    if (englishLanguge === 'en') {
+    if (switcherLanguage === 'en') {
       keyboardWrapper(englishLanguage);
     }
   }
 };
-// // SAVE LOCALSTORAGE -------------------------
+
 const locaLanguage = () => {
-  localStorage.setItem('keyboard-lang', englishLanguge);
+  localStorage.setItem('keyboard-lang', switcherLanguage);
 };
-const resetartLanguage = () => {
+const restartLanguage = () => {
   if (localStorage.getItem('keyboard-lang')) {
-    englishLanguge = localStorage.getItem('keyboard-lang');
+    switcherLanguage = localStorage.getItem('keyboard-lang');
   } else {
-    englishLanguge = 'en';
+    switcherLanguage = 'en';
   }
 };
-// / SWICH & SWAP ---------------------------------------
+
 const swapLangugage = () => {
-  if (englishLanguge === 'ru') {
-    englishLanguge = 'en';
+  if (switcherLanguage === 'ru') {
+    switcherLanguage = 'en';
     locaLanguage();
   } else {
-    englishLanguge = 'ru';
+    switcherLanguage = 'ru';
     locaLanguage();
   }
 };
 
 const russianOrEnglishLanguage = () => {
-  if (activeButtonContain('ControlLeft') && activeButtonContain('AltLeft')) {
+  if (isActiveButtonContain('ControlLeft') && isActiveButtonContain('AltLeft')) {
     swapLangugage();
     capsLockSearch();
   }
 };
-
-
-// ACTIVE CLICK--------------------------------------------------
 
 function leftOrRIghtShift(str) {
   if (str === 'ShiftLeft' || str === 'ShiftRight') {
@@ -200,7 +185,6 @@ const backSpaceKey = () => {
   textArea.setRangeText('');
 };
 
-
 const tab = () => {
   document.addEventListener('keydown', (event) => {
     if (event.code === 'Tab') {
@@ -208,7 +192,6 @@ const tab = () => {
     }
   });
 };
-
 
 const checkShift = () => {
   const leftShiftActive = document.getElementById('ShiftLeft').classList.contains('active');
@@ -218,7 +201,6 @@ const checkShift = () => {
   }
   return false;
 };
-
 
 const specialKeysKeyCode = (id, target) => {
   switch (id) {
@@ -256,7 +238,7 @@ const specialKeysKeyCode = (id, target) => {
   }
 
   if (leftOrRIghtShift(id)) {
-    if (activeButtonContain(id)) {
+    if (isActiveButtonContain(id)) {
       activeNot(id);
       CapsLock = false;
       capsLockSearch(target);
@@ -279,7 +261,7 @@ const specialKeysKeyCode = (id, target) => {
   }
 
   if (id === 'CapsLock') {
-    if (activeButtonContain(id)) {
+    if (isActiveButtonContain(id)) {
       activeNot(id);
       CapsLock = false;
       capsLockSearch(target);
@@ -292,9 +274,11 @@ const specialKeysKeyCode = (id, target) => {
     document.getElementById(id).classList.add('active');
   }
 };
+
 const writeInTextArea = (str) => {
   textArea.value += str;
 };
+
 keyboard.addEventListener('mousedown', (event) => {
   const targetId = event.target.id;
 
@@ -318,7 +302,6 @@ keyboard.addEventListener('mousedown', (event) => {
 });
 
 
-// КЛИК КЛАВИАТУРЫ
 const keyDown = (event) => {
   const keyCodeValue = event.code;
   if (keyCodeValue === 'AltLeft' || keyCodeValue === 'ControlLeft') {
@@ -357,15 +340,11 @@ const keyUp = (event) => {
 document.addEventListener('keydown', (event) => keyDown(event));
 document.addEventListener('keyup', (event) => keyUp(event));
 
-// ---------------------- STRUCTURE FUNCTIONS ---------------------
-
-
 img.addEventListener('click', () => {
   img.classList.toggle('activeImg');
 });
 
-
 window.onload = () => {
-  resetartLanguage();
+  restartLanguage();
   capsLockSearch();
 };

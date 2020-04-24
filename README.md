@@ -1,4 +1,6 @@
-add tack
-dasqsaks1.github.io/virtyalKeyboard
+virtual keyboars task for the rolling scoupes school 
 
-***Это перенесенный респозиторий, по этому мало коммитов ( возникли вопросы с гитом, котороые проще было пофиксить переносом в другой респозиторий. Оригинальный находится в профиле.
+
+you can open the link at this address
+
+https://darqsaks1.github.io/virtualKeyboard/

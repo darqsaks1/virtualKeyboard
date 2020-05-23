@@ -1,0 +1,127 @@
+.wrapper {
+    max-width: 700px;
+    height: 500px;
+    color: #f9e0ec;
+    display: block;
+    margin: auto;  
+} 
+
+.text-area {
+    color:black;
+    font-weight: bold;
+    height: 30%;
+    width: 900px;
+    padding-top: 11px;
+    font-size: 18px;
+    border: 2px solid;
+    border-radius: 6px;
+    resize: none;
+    background-color:whitesmoke;
+    background-size: 300% 300%;
+    margin-bottom: 20px;
+}
+
+.text-area:hover {
+    box-shadow: 2px 2px white, 4px 4px black;
+}
+
+.keyboard {
+  padding: 20px;
+  height: 50%;
+  width: 100%; 
+  margin: 0 auto;
+  background: radial-gradient(circle,#6c6f74, white);
+  border: 3px solid black;
+  border-radius: 5%;
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  animation: rainbow 15s ease infinite;
+  background-size: 300% 300%;
+  box-shadow: 1px 2px white, 6px 6px black; 
+}
+
+.key {
+width: 6%;
+background-color:#a30001;
+text-align: center;
+padding-top: 2%;
+border-radius: 10%;
+border: 1px solid black;
+height: 10%;
+text-align: center;
+box-shadow: inset 2px 2px 5px rgba(154, 147, 140, 0.5), 1px 1px 5px rgba(255, 255, 255, 1);
+  }
+
+p { 
+font-size: 20px;
+color: black;
+background: radial-gradient(circle,#6b7478, #c82f63); 
+border: 1 px solid black;
+animation: rainbow 15s ease infinite;
+background-size: 300% 300%;
+padding: 10px;
+display: block;
+width: 450px;
+font-weight: bold;
+box-shadow: 4px 2px #c82f63;
+}
+
+.key:hover {
+    transform: rotate(36);
+}
+
+.width-keys {
+    width: 100px;
+    border: 1px solid black
+ }
+
+.spaceBar {
+    width: 280px;
+    border: 2px solid black;
+    margin: 0px 30px 0px 30px;
+}
+  
+.active { 
+    color: black;
+    border: 1px solid black;
+    background-color: rgb(230, 230, 230) ;
+    border-radius: 10%;
+    box-shadow: 0 0 0 1px black, 0 0 0 1px white inset;
+    animation-duration: 2s;
+}
+  
+.activeImg {
+  padding: 5px;
+}
+ 
+img { 
+height: 240px;
+width: 240px;
+position: absolute;
+right: 0px;
+top: 223px;
+}
+
+@keyframes rainbow {
+    0% {
+        background-position: 0% 50%
+    }
+    50% {
+        background-position: 100% 50%
+    }
+    100% {
+        background-position: 0% 50%
+    }
+}
+
+@keyframes fadeInLeft {
+  from {
+   opacity: 0;
+   transform: translateX(-2000px);
+  }
+  to {
+   opacity: 1;
+   transform: none;
+  }
+ }
